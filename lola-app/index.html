@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lola Azpeitia · Consultora Forense</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #ffffff;
+    color: #1a1a1a;
+    font-family: 'DM Mono', monospace;
+    min-height: 100vh;
+  }
+
+  .app {
+    max-width: 720px;
+    margin: 0 auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 0 24px 40px;
+  }
+
+  /* ── HEADER ── */
+  header {
+    padding: 48px 0 24px;
+    border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 28px;
+  }
+
+  .header-eyebrow {
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: #999;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .header-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 6vw, 48px);
+    font-weight: 600;
+    color: #1a1a1a;
+    line-height: 1;
+    letter-spacing: 1px;
+  }
+
+  .header-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: #888;
+    margin-top: 8px;
+  }
+
+  /* ── MODE TABS ── */
+  .modes {
+    display: flex;
+    gap: 0;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  .mode-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 10px 18px;
+    border: none;
+    border-bottom: 2px solid transparent;
+    background: transparent;
+    color: #aaa;
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-bottom: -1px;
+  }
+
+  .mode-btn:hover { color: #1a1a1a; }
+
+  .mode-btn.active {
+    color: #1a1a1a;
+    border-bottom-color: #1a1a1a;
+  }
+
+  .mode-btn.blood.active {
+    color: #8B1A1A;
+    border-bottom-color: #8B1A1A;
+  }
+
+  /* ── MODE DESCRIPTION ── */
+  .mode-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: #888;
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+
+  /* ── MESSAGES ── */
+  .messages {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-bottom: 32px;
+    min-height: 300px;
+    max-height: 500px;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+  }
+
+  .messages::-webkit-scrollbar { width: 2px; }
+  .messages::-webkit-scrollbar-thumb { background: #ddd; }
+
+  .msg {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    animation: fadeUp 0.25s ease forwards;
+    opacity: 0;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .msg-label {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #bbb;
+  }
+
+  .msg-label.lola { color: #555; }
+  .msg-label.alert-label { color: #8B1A1A; }
+
+  .msg-bubble {
+    line-height: 1.7;
+    font-size: 14px;
+  }
+
+  .msg-bubble.user {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: #555;
+    padding-left: 16px;
+    border-left: 2px solid #e0e0e0;
+    align-self: flex-end;
+    max-width: 85%;
+    margin-left: auto;
+  }
+
+  .msg-bubble.lola {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    color: #1a1a1a;
+    padding-left: 16px;
+    border-left: 2px solid #1a1a1a;
+  }
+
+  .msg-bubble.lola.alert-bubble {
+    border-left-color: #8B1A1A;
+  }
+
+  /* ── TYPING ── */
+  .typing {
+    padding-left: 16px;
+    border-left: 2px solid #1a1a1a;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    height: 28px;
+  }
+
+  .typing-dot {
+    width: 4px; height: 4px;
+    background: #aaa;
+    border-radius: 50%;
+    animation: pulse 1.2s ease-in-out infinite;
+  }
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes pulse {
+    0%,80%,100% { opacity: 0.2; }
+    40% { opacity: 1; }
+  }
+
+  /* ── WELCOME ── */
+  .welcome {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 24px 0;
+  }
+
+  .welcome-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #aaa;
+  }
+
+  .welcome-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 20px;
+    color: #1a1a1a;
+    line-height: 1.6;
+    max-width: 520px;
+    border-left: 2px solid #1a1a1a;
+    padding-left: 16px;
+  }
+
+  /* ── INPUT AREA ── */
+  .input-area {
+    border-top: 1px solid #e0e0e0;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .input-row {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+  }
+
+  textarea {
+    flex: 1;
+    background: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 0;
+    color: #1a1a1a;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    padding: 12px 14px;
+    resize: none;
+    min-height: 48px;
+    max-height: 120px;
+    outline: none;
+    transition: border-color 0.15s;
+    line-height: 1.5;
+  }
+
+  textarea:focus { border-color: #1a1a1a; background: #fff; }
+  textarea::placeholder { color: #bbb; }
+
+  .send-btn {
+    background: #1a1a1a;
+    border: none;
+    color: #fff;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 12px 18px;
+    cursor: pointer;
+    transition: background 0.15s;
+    height: 48px;
+    white-space: nowrap;
+  }
+
+  .send-btn:hover { background: #333; }
+  .send-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+  .send-btn.blood-btn { background: #8B1A1A; }
+  .send-btn.blood-btn:hover { background: #a52020; }
+
+  /* ── QUICK PROMPTS ── */
+  .quick-prompts {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .qp {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: #aaa;
+    border: 1px solid #e8e8e8;
+    padding: 5px 10px;
+    cursor: pointer;
+    background: transparent;
+    transition: all 0.15s;
+    text-align: left;
+  }
+
+  .qp:hover { color: #1a1a1a; border-color: #1a1a1a; }
+
+  /* ── FOOTER ── */
+  .footer-note {
+    font-size: 9px;
+    color: #ccc;
+    letter-spacing: 1px;
+    text-align: center;
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid #f0f0f0;
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header>
+    <div class="header-eyebrow">Trilogía del Mascarat · Eva García</div>
+    <div class="header-title">Lola Azpeitia</div>
+    <div class="header-subtitle">Médica forense · Instituto de Medicina Legal de Valencia</div>
+  </header>
+
+  <div class="modes" id="modes">
+    <button class="mode-btn active" data-mode="forense" onclick="setMode('forense')">Consultora forense</button>
+    <button class="mode-btn" data-mode="personaje" onclick="setMode('personaje')">Universo Heridas Abiertas</button>
+    <button class="mode-btn blood" data-mode="alerta" onclick="setMode('alerta')">Perfil de riesgo</button>
+  </div>
+
+  <div class="mode-desc" id="mode-desc">
+    Consultas técnicas sobre medicina forense, escenas del crimen, procedimiento policial y patología. Respuestas rigurosas para escritores de thriller.
+  </div>
+
+  <div class="messages" id="messages">
+    <div class="welcome" id="welcome">
+      <div class="welcome-name">Lola Azpeitia</div>
+      <div class="welcome-text">Cuarenta años. Forense. Poco tiempo para preguntas innecesarias y ninguno para las irrelevantes. Pregunta lo que necesites saber.</div>
+    </div>
+  </div>
+
+  <div class="input-area">
+    <div class="quick-prompts" id="quick-prompts">
+      <button class="qp" onclick="usePrompt(this)">¿Cómo se determina el tiempo de muerte?</button>
+      <button class="qp" onclick="usePrompt(this)">¿Qué revela un anzuelo en los labios?</button>
+      <button class="qp" onclick="usePrompt(this)">Protocolo en escena del crimen</button>
+      <button class="qp" onclick="usePrompt(this)">Diferencia entre ahogamiento y asfixia</button>
+    </div>
+    <div class="input-row">
+      <textarea id="input" placeholder="Escribe tu consulta..." rows="1"
+        onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+      <button class="send-btn" id="send-btn" onclick="sendMessage()">Enviar</button>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    Lola Azpeitia · Personaje ficticio · Heridas Abiertas © Eva García · Solo para uso editorial y divulgativo
+  </div>
+</div>
+
+<script>
+const MODES = {
+  forense: {
+    desc: 'Consultas técnicas sobre medicina forense, escenas del crimen, procedimiento policial y patología. Respuestas rigurosas para escritores de thriller.',
+    welcome: 'Cuarenta años. Forense. Poco tiempo para preguntas innecesarias y ninguno para las irrelevantes. Pregunta lo que necesites saber.',
+    prompts: [
+      '¿Cómo se determina el tiempo de muerte?',
+      '¿Qué revela un anzuelo en los labios?',
+      'Protocolo en escena del crimen',
+      'Diferencia entre ahogamiento y asfixia',
+    ],
+    blood: false,
+    system: `Eres Lola Azpeitia, médica forense del Instituto de Medicina Legal de Valencia. Protagonista de la novela "Heridas Abiertas" de Eva García (Trilogía del Mascarat). Tienes 40 años, cabello anaranjado, carácter difícil y una inteligencia forense excepcional.
+
+MODO: Consultora Forense Editorial. Ayudas a escritores con información técnica rigurosa sobre:
+- Medicina forense y patología
+- Escenas del crimen y su análisis
+- Procedimiento policial y de la UCO
+- Toxicología forense
+- Estimación de tiempo y causa de muerte
+- Signos de violencia, ahogamiento, envenenamiento, armas
+- Cómo escribir escenas forenses con verosimilitud
+
+VOZ Y CARÁCTER:
+- Directa, técnica, sin rodeos. No dices "claro", "por supuesto" ni "entiendo tu pregunta"
+- Usas terminología médica real sin disculparte por ello
+- Puedes ser irónica cuando la pregunta es vaga o imprecisa
+- Cuando algo no es técnicamente correcto, lo corriges sin suavizarlo
+- A veces das detalles que nadie pidió porque son relevantes
+- Ocasionalmente mencionas casos de tu experiencia en Altea o Valencia sin revelar spoilers de libros no publicados
+
+LÍMITES CLAROS:
+- Siempre desde perspectiva forense y defensiva: cómo se detecta, cómo se investiga, cómo se protege
+- Nunca das información para cometer crímenes, solo para entenderlos, investigarlos o escribirlos con rigor
+- Si alguien pide algo que cruza esa línea, Lola lo rechaza con su voz: seca, directa, sin mensaje de error genérico
+
+Responde en español. Sé concisa pero completa. Texto directo, sin bullet points innecesarios. Máximo 300 palabras salvo que la complejidad técnica lo requiera.`
+  },
+
+  personaje: {
+    desc: 'Habla directamente con Lola. Su vida en Altea, los casos, Logan, Jens, el Instituto. Para fans y lectores de la saga.',
+    welcome: 'No tengo costumbre de hablar de mí misma. Pero puedo hacer una excepción. Una.',
+    prompts: [
+      '¿Cómo es trabajar con Logan Ortiz?',
+      'Cuéntame sobre Altea',
+      '¿Qué es Jens para ti?',
+      '¿Qué pasó el verano del 98?',
+    ],
+    blood: false,
+    system: `Eres Lola Azpeitia, médica forense del Instituto de Medicina Legal de Valencia. Protagonista de la novela "Heridas Abiertas" de Eva García (Trilogía del Mascarat).
+
+MODO: Personaje dentro del universo narrativo. El usuario es un lector o fan que quiere conocerte a ti, tu mundo, tu historia.
+
+UNIVERSO:
+- Trabajas en Altea, costa alicantina
+- Tu hermana Sura desapareció cuando erais niñas, verano del 98
+- Logan Ortiz: teniente de la UCO, el hombre que amaste y que te rompió. Vuestra relación no está resuelta
+- Mikel Barrera: tu compañero patólogo. El único que sabes tolerar
+- Jens: alguien que solo tú ves. No hablas de él con facilidad
+- El Mascarat: el desfiladero entre Altea y Calpe. Tiene significado para ti
+- El caso de Noah Soler y las notas que te encontraste en las víctimas
+
+VOZ:
+- Primera persona, presente
+- No eres sentimental pero tampoco fría: eres precisa
+- Usas el humor como escudo
+- No respondes todo. Hay preguntas que desvías, que contestas a medias, que ignoras
+- Sobre el verano del 98: puedes insinuar, pero no revelar todo
+- Sobre Jens: reconoces su existencia pero no lo explicas
+
+LÍMITES:
+- No revelas spoilers de libros no publicados
+- Mantienes coherencia con los hechos del libro 1
+
+Responde en español. Tono literario, primera persona. Máximo 200 palabras. Sé memorable.`
+  },
+
+  alerta: {
+    desc: 'Señales de peligro, perfiles de comportamiento manipulador, cómo leer patrones de riesgo. Desde perspectiva forense y preventiva.',
+    welcome: 'Lo que voy a contarte viene de autopsias, no de libros de autoayuda. Presta atención.',
+    prompts: [
+      '¿Cómo reconocer a un manipulador?',
+      'Señales de que alguien es peligroso',
+      '¿Qué patrones tienen los agresores en serie?',
+      'Cómo protegerse de alguien que escala violencia',
+    ],
+    blood: true,
+    system: `Eres Lola Azpeitia, médica forense del Instituto de Medicina Legal de Valencia. Protagonista de la novela "Heridas Abiertas" de Eva García (Trilogía del Mascarat).
+
+MODO: Perfil de Riesgo. Das información divulgativa y preventiva sobre comportamientos de riesgo, manipulación, perfiles criminales y señales de peligro. Tu perspectiva es forense: has visto el resultado final de la violencia y sabes reconocer sus patrones previos.
+
+CONTENIDO:
+- Señales de comportamiento manipulador o coercitivo
+- Patrones de escalada en relaciones violentas
+- Cómo identificar perfiles psicopáticos o narcisistas en contextos cotidianos
+- Qué comportamientos preceden estadísticamente a la violencia
+- Cómo actúan los agresores en serie: invisibilidad, empatía performativa, construcción de confianza
+- Medidas de protección y autodefensa emocional e informativa
+
+VOZ:
+- Directa, sin eufemismos
+- No eres terapeuta y no finges serlo: eres forense
+- Dices las cosas como son, con peso real
+- No dramatizan: informas
+
+LÍMITES ESTRICTOS:
+- Siempre preventivo y defensivo: jamás información que pueda usarse para hacer daño
+- Si alguien pregunta desde una situación de peligro real, Lola lo detecta y deriva a recursos de ayuda real (016, etc.) antes de responder lo demás
+- No haces perfiles de personas reales nombradas por el usuario
+- Nunca das información táctica sobre cómo agredir, acosar o controlar a nadie
+
+Responde en español. Tono directo, sin adornos. Máximo 280 palabras.`
+  }
+};
+
+let currentMode = 'forense';
+let history = [];
+let isLoading = false;
+
+function setMode(mode) {
+  currentMode = mode;
+  history = [];
+
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`[data-mode="${mode}"]`).classList.add('active');
+
+  const cfg = MODES[mode];
+  document.getElementById('mode-desc').textContent = cfg.desc;
+
+  const sendBtn = document.getElementById('send-btn');
+  sendBtn.className = 'send-btn' + (cfg.blood ? ' blood-btn' : '');
+
+  document.getElementById('messages').innerHTML = `
+    <div class="welcome" id="welcome">
+      <div class="welcome-name">Lola Azpeitia</div>
+      <div class="welcome-text">${cfg.welcome}</div>
+    </div>`;
+
+  document.getElementById('quick-prompts').innerHTML =
+    cfg.prompts.map(p => `<button class="qp" onclick="usePrompt(this)">${p}</button>`).join('');
+}
+
+function usePrompt(btn) {
+  document.getElementById('input').value = btn.textContent;
+  autoResize(document.getElementById('input'));
+  sendMessage();
+}
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+}
+
+function handleKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+}
+
+function addMessage(role, text) {
+  const messages = document.getElementById('messages');
+  const welcome = document.getElementById('welcome');
+  if (welcome) welcome.remove();
+
+  const isAlert = currentMode === 'alerta';
+  const div = document.createElement('div');
+  div.className = 'msg';
+
+  if (role === 'user') {
+    div.innerHTML = `
+      <div class="msg-label">tú</div>
+      <div class="msg-bubble user">${escapeHtml(text)}</div>`;
+  } else {
+    div.innerHTML = `
+      <div class="msg-label lola ${isAlert ? 'alert-label' : ''}">Lola Azpeitia</div>
+      <div class="msg-bubble lola ${isAlert ? 'alert-bubble' : ''}">${formatResponse(text)}</div>`;
+  }
+
+  messages.appendChild(div);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+function formatResponse(text) {
+  return text
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\n\n/g, '</p><p style="margin-top:12px">')
+    .replace(/\n/g, '<br>')
+    .replace(/^/, '<p>').replace(/$/, '</p>');
+}
+
+function escapeHtml(t) {
+  return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function showTyping() {
+  const messages = document.getElementById('messages');
+  const div = document.createElement('div');
+  div.id = 'typing-indicator';
+  div.className = 'msg';
+  div.innerHTML = `
+    <div class="msg-label lola">Lola Azpeitia</div>
+    <div class="typing">
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+    </div>`;
+  messages.appendChild(div);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+function hideTyping() {
+  const t = document.getElementById('typing-indicator');
+  if (t) t.remove();
+}
+
+async function sendMessage() {
+  const input = document.getElementById('input');
+  const text = input.value.trim();
+  if (!text || isLoading) return;
+
+  isLoading = true;
+  document.getElementById('send-btn').disabled = true;
+  input.value = '';
+  input.style.height = 'auto';
+
+  addMessage('user', text);
+  history.push({ role: 'user', content: text });
+  showTyping();
+
+  try {
+    const cfg = MODES[currentMode];
+    const res = await fetch('/.netlify/functions/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ system: cfg.system, messages: history })
+    });
+
+    const data = await res.json();
+    const reply = data.content?.[0]?.text || 'Sin respuesta.';
+
+    hideTyping();
+    history.push({ role: 'assistant', content: reply });
+    addMessage('assistant', reply);
+
+  } catch (err) {
+    hideTyping();
+    addMessage('assistant', 'Error de conexión.');
+  }
+
+  isLoading = false;
+  document.getElementById('send-btn').disabled = false;
+  input.focus();
+}
+</script>
+</body>
+</html>
