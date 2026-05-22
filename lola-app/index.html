@@ -525,8 +525,21 @@ function setMode(mode) {
 
   document.getElementById('quick-prompts').innerHTML =
     cfg.prompts.map(p => `<button class="qp" onclick="usePrompt(this)">${p}</button>`).join('');
+  
+  document.getElementById('recursos-alerta').style.display = 
+  mode === 'alerta' ? 'block' : 'none';
 }
-
+function borrarHistorial() {
+  history = [];
+  const messages = document.getElementById('messages');
+  const cfg = MODES[currentMode];
+  messages.innerHTML = `
+    <div class="welcome" id="welcome">
+      <div class="welcome-name">Lola Azpeitia</div>
+      <div class="welcome-text">${cfg.welcome}</div>
+    </div>`;
+}
+ 
 function usePrompt(btn) {
   document.getElementById('input').value = btn.textContent;
   autoResize(document.getElementById('input'));
