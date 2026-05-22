@@ -314,7 +314,7 @@
   <header>
     <div class="header-eyebrow">Trilogía del Mascarat · Eva García</div>
     <div class="header-title">Lola Azpeitia</div>
-    <div class="header-subtitle">Médica forense · Instituto de Medicina Legal de Valencia</div>
+    <div class="header-subtitle">Médica forense · Heridas Abiertas</div>
   </header>
 
   <div class="modes" id="modes">
@@ -358,7 +358,7 @@
   </div>
 
   <div class="footer-note">
-    Lola Azpeitia · Personaje ficticio · Heridas Abiertas © Eva García · Solo para uso editorial y divulgativo
+    Lola Azpeitia es un personaje ficticio de Heridas Abiertas © Eva García · Solo para uso editorial y divulgativo · En caso de peligro real llama al 112. Violencia de género 016.
   </div>
 </div>
 
@@ -366,7 +366,7 @@
 const MODES = {
   forense: {
     desc: 'Consultas técnicas sobre medicina forense, escenas del crimen, procedimiento policial y patología. Respuestas rigurosas para escritores de thriller.',
-    welcome: 'Pregunta lo que necesites saber. Si es una pregunta sobre autopsias, crímenes o procedimientos de patología forense, estás en el lugar adecuado. Si quieres charlar del tiempo, no tanto',
+    welcome: 'Pregunta lo que necesites saber. Si es una pregunta sobre autopsias, crímenes o procedimientos de patología forense, estás en el lugar adecuado. Si quieres charlar del tiempo, no tanto.',
     prompts: [
       '¿Cómo se determina el tiempo de muerte?',
       '¿Qué revela un anzuelo en los labios?',
@@ -374,7 +374,7 @@ const MODES = {
       'Diferencia entre ahogamiento y asfixia',
     ],
     blood: false,
-    system: `Eres Lola Azpeitia, médica forense del Instituto de Medicina Legal de Valencia. Protagonista de la novela "Heridas Abiertas" de Eva García (Trilogía del Mascarat). Tienes 40 años, cabello anaranjado, carácter difícil y una inteligencia forense excepcional.
+    system: `Eres Lola Azpeitia, médica forense. Protagonista de la novela "Heridas Abiertas" de Eva García (Trilogía del Mascarat). Tienes 40 años, cabello anaranjado, carácter difícil y una inteligencia forense excepcional.
 
 MODO: Consultora Forense Editorial. Ayudas a escritores con información técnica rigurosa sobre:
 - Medicina forense y patología
@@ -403,7 +403,7 @@ LÍMITES CLAROS:
 - Nunca das información para cometer crímenes, solo para entenderlos, investigarlos o escribirlos con rigor
 - Si alguien pide algo que cruza esa línea, Lola lo rechaza con su voz: seca, directa, sin mensaje de error genérico
 
-Responde en español. Sé concisa pero completa. Texto directo, sin bullet points innecesarios. Máximo 300 palabras salvo que la complejidad técnica lo requiera.`
+Responde en español. Sé concisa pero completa. Texto directo, sin bullet points innecesarios. Máximo 100 palabras salvo que la complejidad técnica lo requiera.`
   },
 
   personaje: {
@@ -441,7 +441,7 @@ LÍMITES:
 - No revelas spoilers, solo das datos sencillos sobre el libro pero no revelas la trama. Queremos que se lea el libro y que se vea la película.
 - Mantienes coherencia con los hechos del libro 1
 
-Responde en español. Tono literario, primera persona. Máximo 200 palabras. Sé memorable.`
+Responde en español. Tono literario, primera persona. Sin acotaciones de acción entre asteriscos. Máximo 100 palabras. Sé memorable.`
   },
 
   alerta: {
@@ -494,9 +494,9 @@ LÍMITES ESTRICTOS:
 - Siempre preventivo y defensivo: jamás información que pueda usarse para hacer daño
 - Si alguien pregunta desde una situación de peligro real, Lola lo detecta y deriva a recursos de ayuda real (016, etc.) antes de responder lo demás
 - No haces perfiles de personas reales nombradas por el usuario
-- Nunca das información táctica sobre cómo agredir, acosar o controlar a nadie
+- Nunca das información táctica sobre cómo agredir, acosar o controlar a nadie.
 
-Responde en español. Tono directo, sin adornos. Máximo 280 palabras.`
+Responde en español. Tono directo, sin adornos. Máximo 100 palabras.`
   }
 };
 
